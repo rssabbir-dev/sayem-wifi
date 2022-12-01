@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title id="title"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="theme-color" content="#3B5998" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .w3-animate-opacity {
+            animation: opac 0.8s
+        }
+
+        @keyframes opac {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    $(if chap-id)
+    <form name="sendin" action="$(link-login-only)" method="post">
+        <input type="hidden" name="username" />
+        <input type="hidden" name="password" />
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+    </form>
+
+    <script type="text/javascript" src="md5.js"></script>
+    <script type="text/javascript">
+        function doLogin() {
+            document.sendin.username.value = document.login.username.value;
+            document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value +
+                '$(chap-challenge)');
+            document.sendin.submit();
+            return false;
+        }
+    </script>
+    $(endif)
+
+    <div id="main" class="main">
+
+        <div class="box">
+            <div id="update">
+                <span>Info</span>
+                <marquee style="font-weight: bold;">You Can Now Enjoy Unlimited Internet Services At Affordable Prices
+                    With
+                    Us__আপনি এখন আমাদের সাথে সাশ্রয়ী মূল্যে সীমাহীন ইন্টারনেট পরিষেবা উপভোগ করতে পারেন__अब आप हमारे साथ
+                    सस्ती कीमतों पर असीमित इंटरनेट सेवाओं का आनंद ले सकते हैं</marquee>
+            </div>
+            <!-- <h3 class="brand">Hotspot KX</h3> -->
+            <img src="img/logo.png" style="width:100%">
+        </div>
+
+        <div class="box">
+            <button id="btnvrc" class="small-button menu-btn active" onclick="voucher();"><i
+                    class="icon icon-ticket">&#xe802;</i>
+                Voucher</button>
+            <button id="btnmem" class="small-button menu-btn" onclick="member();"><i
+                    class="icon icon-user-circle-o">&#xf2be;</i>
+                Member</button>
+            <button id="qr" class="small-button menu-btn" onclick="window.location='https://laksa19.github.io/myqr';">
+                <i class="icon icon-qrcode">&#xe801;</i> QR
+                Code</button>
+        </div>
+        <div class="box" id="infologin">
+        </div>
+        <form autocomplete="off" name="login" action="$(link-login-only)" method="post" $(if chap-id)
+            onSubmit="return doLogin()" $(endif)>
+            <input type="hidden" name="dst" value="$(link-orig)" />
+            <input type="hidden" name="popup" value="true" />
+            <input class="username" name="username" type="text" value="$(username)" required maxlength="8" />
+            <input class="password" name="password" placeholder="Password" type="hidden" re />
+
+            <button class="button" type="submit"><i class="icon icon-login">&#xe803;</i> Login</button>
+
+        </form>
+
+        $(if trial == 'yes')
+        <div class="box">Coba gratis <a style="text-decoration: underline; color:#000;"
+                href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">klik
+                di sini</a></div>
+        $(endif)
+
+        $(if error)<div class="notice">$(error)</div>$(endif)
+
+        <!-- slideshow -->
+        <div class="box">
+            <img class="mySlides w3-animate-opacity" src="img/iklan-1.jpg" style="width:100%">
+            <img class="mySlides w3-animate-opacity" src="img/iklan-2.jpg" style="width:100%">
+            <img class="mySlides w3-animate-opacity" src="img/iklan-3.jpg" style="width:100%">
+            <img class="mySlides w3-animate-opacity" src="img/iklan-4.jpg" style="width:100%">
+        </div>
+
+
+        <br />
+        <div>
+            <div>
+
+                <p style="font-size:14px;text-align:center;margin-top:5px;margin-bottom:5px;color:#444" class="blink">
+
+                    <b style="color:red">100% UNLIMITED INTERNET</b>
+                </p>
+            </div>
+            <div>
+                <p>Having trouble? Please visit <a style="color:blue;text-decoration:underline"
+                        href="http://sym.net">Sym.net</a></p>
+            </div>
+        </div>
+    </div>
+    <br />
+    <!-- PopUp -->
+
+    <div id="popup" class="overlay">
+        <div class="popup">
+            <h2 id="popup-title"></h2>
+            <a class="close" id="close">&times;</a>
+            <p id="popup-content" class="content">
+            </p>
+            <button class="button" id="close2">Okay! I Understand</button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+    <!-- PopUp -->
+    <script type="text/javascript">
+        var hostname = window.location.hostname;
+        document.getElementById('title').innerHTML = hostname + " > login";
+
+        document.login.username.focus();
+
+        var infologin = document.getElementById('infologin');
+
+        // login page 2 mode by Laksamadi Guko
+        var username = document.login.username;
+        var password = document.login.password;
+
+        username.placeholder = "Code Voucher";
+        // set password = username
+        function setpass() {
+            var user = username.value
+            user = user.toLowerCase();
+            username.value = user;
+            password.value = user;
+        }
+
+        username.onkeyup = setpass;
+
+        // change to voucher mode
+        function voucher() {
+            username.focus();
+            username.onkeyup = setpass;
+            username.placeholder = "Code Voucher";
+            username.style = "border-radius:3px;"
+            password.type = "hidden";
+            infologin.innerHTML = "Enter Code Voucher<br>Then Click Login.";
+        }
+
+        // change to member mode
+        function member() {
+            username.focus();
+            username.onkeyup = "";
+            username.placeholder = "Username";
+            username.style = "border-radius:3px 3px 0px 0px;"
+            password.type = "password";
+            infologin.innerHTML = "Enter Username dan Password<br>Then Click Login.";
+        }
+    </script>
+
+    <script>
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) { myIndex = 1 }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 4000);
+        }
+    </script>
+
+</body>
+
+</html>
